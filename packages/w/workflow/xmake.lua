@@ -9,7 +9,7 @@ package("workflow")
     add_versions("v1.1.0", "321152d9c9c1d5d0182c098e631f5ccb23f4675760933930f18395a0bb69fac3")
     add_versions("v1.0.1", "8da09b26e9f138ed98f11e6be7352ae9cc9a1f297135945ccde8a3d997b65508")
 
-    add_deps("openssl", {system = true})
+    add_deps("openssl3")
 
     if is_plat("linux") then
         add_syslinks("pthread", "dl")
@@ -17,6 +17,14 @@ package("workflow")
 
     on_install("linux", "macosx", function (package)
         local configs = {}
+        local content = io.readfile("xmake.lua")
+        content = content:gsub('add_requires%("openssl"%)', 'add_requires("openssl3")')
+        content = content:gsub('add_packages%("openssl"%)', 'add_packages("openssl3")')
+        io.writefile("xmake.lua", content)
+        -- upstream xmake build omits TLVMessage.cc (present in CMake), which coke's tlv module needs
+        local protocol = io.readfile("src/protocol/xmake.lua")
+        protocol = protocol:gsub('"HttpUtil%.cc"%)', '"HttpUtil.cc",\n              "TLVMessage.cc")', 1)
+        io.writefile("src/protocol/xmake.lua", protocol)
         if package:config("shared") then
             configs.kind = "shared"
         end

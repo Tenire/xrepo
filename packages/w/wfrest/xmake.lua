@@ -10,7 +10,7 @@ package("wfrest")
     add_versions("v0.9.8", "61de0d3fd998562c54ec7a932c503a766d9f269386b28aa3cc8f8180868f58ad")
 
     add_deps("workflow", "zlib")
-    add_deps("openssl", {system = true})
+    add_deps("openssl3")
 
     if is_plat("linux") then
         add_syslinks("pthread", "dl")

@@ -9,7 +9,7 @@ package("coke")
     add_versions("v0.7.0", "9d7ccf0a67b837e235369a3dfdb4feba7ea31909f7e0cb0a7cdfb36c8f996b58")
 
     add_deps("workflow")
-    add_deps("openssl", {system = true})
+    add_deps("openssl3")
 
     if is_plat("linux") then
         add_syslinks("pthread", "dl")
