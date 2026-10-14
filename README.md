@@ -17,13 +17,13 @@ This repository serves as a personal/custom package registry for projects needin
 To add this repository locally:
 
 ```bash
-# Add as a local repository
-xrepo add-repo my-xrepo /path/to/xrepo dev
+# Recommended: Add from GitHub (defaults to stable master)
+xrepo add-repo tenire-xrepo https://github.com/Tenire/xrepo.git
 
-# Or once published to git:
-# xrepo add-repo my-xrepo https://github.com/<user>/xrepo.git dev
-```
-```bash
+# Or add local development folder:
+# xrepo add-repo tenire-xrepo /path/to/xrepo dev
+
+# Verify registered repositories
 xrepo list-repo
 ```
 
@@ -36,8 +36,10 @@ xrepo install <package-name>
 Or in your project `xmake.lua`:
 
 ```lua
-add_repositories("my-xrepo /path/to/xrepo")
-
+-- Add custom repository directly via GitHub URL:
+add_repositories("tenire-xrepo https://github.com/Tenire/xrepo.git")
+-- Or local directory:
+-- add_repositories("tenire-xrepo /path/to/xrepo")
 add_requires("<package-name>")
 
 target("demo")
