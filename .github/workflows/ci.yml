@@ -1,14 +1,12 @@
-name: CI
+name: CI & Sync
 
 on:
   pull_request:
     branches:
       - dev
-      - main
   push:
     branches:
       - dev
-      - main
 
 jobs:
   test-linux:
@@ -40,3 +38,24 @@ jobs:
       - name: Run Tests
         run: |
           xmake l ./scripts/test.lua -D -k ${{ matrix.kind }} -m ${{ matrix.mode }}
+
+  sync-master:
+    name: Sync to Master
+    needs: test-linux
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fast-forward master to dev
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout master
+          git merge --ff-only dev
+          git push origin master
