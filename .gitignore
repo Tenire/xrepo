@@ -32,3 +32,4 @@ doc
 dist/
 .idea/
 /updated
+.omp/
