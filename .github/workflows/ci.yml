@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  test-linux:
+    name: Linux (${{ matrix.kind }})
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [static, shared]
+        mode: [release]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: branch@master
+          actions-cache-folder: '.xmake-cache'
+          actions-cache-key: 'ubuntu'
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc g++ p7zip
+
+      - name: Run Tests
+        run: |
+          xmake l ./scripts/test.lua -D -k ${{ matrix.kind }} -m ${{ matrix.mode }}
