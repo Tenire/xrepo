@@ -23,11 +23,8 @@ xrepo add-repo my-xrepo /path/to/xrepo dev
 # Or once published to git:
 # xrepo add-repo my-xrepo https://github.com/<user>/xrepo.git dev
 ```
-
-Check registered repositories:
-
 ```bash
-xrepo repo -l
+xrepo list-repo
 ```
 
 ### 2. Install Packages
