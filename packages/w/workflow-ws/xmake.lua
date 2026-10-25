@@ -4,6 +4,7 @@ package("workflow-ws")
     set_license("Apache-2.0")
 
     add_urls("https://github.com/Tenire/workflow-ws.git")
+    add_versions("v1.1.1+ws", "a8bdec3506ed32dd5605fee26fe17fd0f7309bcb")
     add_versions("v1.1.0+ws", "db6972de1e26aef84a7525d3c53f2d42f79c5538")
 
     add_deps("openssl3")
@@ -35,8 +36,11 @@ package("workflow-ws")
         assert(package:check_cxxsnippets({test = [[
             #include <workflow/WFTaskFactory.h>
             #include <workflow/WFWebSocketServer.h>
+            #include <workflow/StreamReply.h>
             void test() {
                 WFWebSocketServer server;
+                StreamReply *reply = nullptr;
+                (void)reply;
             }
         ]]}, {configs = {languages = "c++11"}}))
     end)
