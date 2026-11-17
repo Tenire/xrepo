@@ -1,10 +1,10 @@
 package("maplog")
     set_homepage("https://github.com/Tenire/maplog")
     set_description("Lightweight C++ logging library with file rotation and source location capture")
-    set_license("GPL-3.0")
 
     add_urls("https://github.com/Tenire/maplog.git")
 
+    add_versions("v1.1.0", "f25c3fe100bf4c88308782eb32cd4f7238614ded")
     add_versions("v1.0.1", "7726d604883eee8c6b02ee3851a92c37af7ec741")
 
     if is_plat("linux") then
